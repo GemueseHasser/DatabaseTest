@@ -1,0 +1,1 @@
+## Ein Test-Projekt, welches nur exemplarisch dazu dient, eine Verbindung zu einer DB herzustellen.
