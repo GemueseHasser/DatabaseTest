@@ -115,8 +115,6 @@ public final class DatabaseHandler {
         // configuration: define options that cannot be overridden
         config.addDataSourceProperty("passwordCharacterEncoding", "UTF-8");
         config.addDataSourceProperty("useCompression", false);
-        config.addDataSourceProperty("tinyInt1isBit", true);
-        config.addDataSourceProperty("yearIsDateType", true);
 
         // performance: enable prepared statement caching
         config.addDataSourceProperty("cachePrepStmts", true);
