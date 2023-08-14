@@ -28,34 +28,34 @@ public final class DatabaseHandler {
     //</editor-fold>
 
     //<editor-fold desc="bounds">
-    /** Die minimale Pool-Länge. */
+    /** Die minimale Größe des Connection-Pools. */
     @Range(from = 5, to = 5)
     private static final int POOL_MIN = 5;
-    /** Die maximale Pool-Länge. */
+    /** Die maximale Größe des Connection-Pools. */
     @Range(from = 5, to = 5)
     private static final int POOL_MAX = 5;
     //</editor-fold>
 
     //<editor-fold desc="maintenance">
-    /** Die maximale Verbindungs-Zeit, die der Handler mit der Datenbank verbunden ist. */
+    /** Die Zeit, die eine Verbindung in dem Pool maximal bestehen darf, ohne genutzt zu werden. */
     @Range(from = 0, to = Integer.MAX_VALUE)
     private static final int MAX_LIFETIME = 15 * 60 * 1000;
-    /** Die Zeit, nachdem der Handler die Verbindung verliert zu der Datenbank, bzw. die Verbindung aufgibt. */
+    /** Die Zeit, die der Handler versucht eine Verbindung zu der Datenbank herzustellen, wenn er keine bekommt. */
     @Range(from = 0, to = Integer.MAX_VALUE)
     private static final int CONNECT_TIMEOUT = 15 * 1000;
     //</editor-fold>
 
     //<editor-fold desc="optimization">
-    /** Die Cache-Size eines {@link PreparedStatement}. */
+    /** Die Anzahl an {@link PreparedStatement}, die der Handler pro Verbindung cached. */
     @Range(from = 0, to = Integer.MAX_VALUE)
     private static final int PREPARED_STATEMENT_CACHE_SIZE = 300;
-    /** Das SQL-Limit eines {@link PreparedStatement}. */
+    /** Die maximale Länge eines {@link PreparedStatement}, die der Handler cached. */
     @Range(from = 0, to = Integer.MAX_VALUE)
     private static final int PREPARED_STATEMENT_SQL_LIMIT = 2048;
-    /** Die Cache-Size eines {@link CallableStatement}. */
+    /** Die Anzahl an {@link CallableStatement}, die der Handler pro Verbindung cached. */
     @Range(from = 0, to = Integer.MAX_VALUE)
     private static final int CALLABLE_STATEMENT_CACHE_SIZE = 300;
-    /** Die Use-Batch-Multi-Send-Number. */
+    /** Die Anzahl an Anfragen, die "gestapelt" gesendet werden dürfen, die dann nach und nach verarbeitet werden. */
     @Range(from = 0, to = Integer.MAX_VALUE)
     private static final int USE_BATCH_MULTI_SEND_NUMBER = 500;
     //</editor-fold>
@@ -64,7 +64,7 @@ public final class DatabaseHandler {
 
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die Daten-Quelle der Datenbank. */
+    /** Die Daten-Quelle der Datenbank, die die Verbindungen aus dem Pool verwaltet. */
     @Getter
     @NotNull
     private final HikariDataSource dataSource;
@@ -148,10 +148,10 @@ public final class DatabaseHandler {
     //<editor-fold desc="connection">
 
     /**
-     * Gibt die Verbindung zu der Datenbank auf der Grundlage der {@link HikariDataSource Quelle}, welche beim Erstellen
-     * dieser Instanz neu erzeugt wurde, zurück.
+     * Gibt eine Verbindung zu der Datenbank auf der Grundlage der {@link HikariDataSource Quelle}, welche beim
+     * Erstellen dieser Instanz neu erzeugt wurde, zurück. Die Verbindung wird aus dem Connection-Pool gewählt.
      *
-     * @return die Verbindung zu der Datenbank auf der Grundlage der {@link HikariDataSource Quelle}, welche beim
+     * @return Eine Verbindung zu der Datenbank auf der Grundlage der {@link HikariDataSource Quelle}, welche beim
      *     Erstellen dieser Instanz neu erzeugt wurde.
      *
      * @throws SQLException Die Fehlermeldung, die auftreten kann, wenn die Verbindung fehlerhaft sein sollte.
