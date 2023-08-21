@@ -1,9 +1,6 @@
 package de.jonas.database;
 
 import de.jonas.database.handler.DatabaseHandler;
-import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Range;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,23 +18,18 @@ public final class DatabaseTest {
 
     //<editor-fold desc="CONSTANTS">
     /** Der Pool-Name, mit dem der {@link DatabaseHandler} initialisiert wird. */
-    @NotNull
     private static final String POOL_NAME = "TestDB";
     /** Die Adresse, unter der die Datenbank angesprochen wird. */
-    @NotNull
     private static final String JDBC_URL = "jdbc:mariadb://localhost:3306/testDB";
     /** Der Nutzer, mit dem auf die Datenbank zugegriffen wird. */
-    @NotNull
     private static final String USER = "testUser";
     /** Das Passwort, welches zu dem {@code USER} gehört. */
-    @NotNull
     private static final String PASSWORD = "password";
     //</editor-fold>
 
 
     //<editor-fold desc="STATIC FIELDS">
     /** Der {@link DatabaseHandler}, mit der die Verbindung zu der Datenbank hergestellt wird. */
-    @Getter
     private static DatabaseHandler databaseHandler;
     //</editor-fold>
 
@@ -49,7 +41,7 @@ public final class DatabaseTest {
      *
      * @param args Die Argumente, die beim Ausführen dieser Anwendung übergeben wird.
      */
-    public static void main(@NotNull final String[] args) {
+    public static void main(final String[] args) {
         // save properties to instance database-handler
         final Properties databaseProperties = new Properties();
         databaseProperties.put("jdbcUrl", JDBC_URL);
@@ -86,7 +78,7 @@ public final class DatabaseTest {
             insertValues("Name9", 9);
             Thread.sleep(500);
             insertValues("Name10", 10);
-        } catch (@NotNull final InterruptedException e) {
+        } catch (final InterruptedException e) {
             throw new RuntimeException(e);
         }
 
@@ -94,6 +86,15 @@ public final class DatabaseTest {
         System.out.println(getNewestName());
     }
     //</editor-fold>
+
+
+    /**
+     * Gibt den {@link DatabaseHandler} zurück, mit dem eine stabile Verbindung zur Datenbank hergestellt wurde.
+     * @return Der {@link DatabaseHandler}, mit dem eine stabile Verbindung zur Datenbank hergestellt wurde.
+     */
+    public static DatabaseHandler getDatabaseHandler() {
+        return databaseHandler;
+    }
 
 
     //<editor-fold desc="utility">
@@ -112,7 +113,7 @@ public final class DatabaseTest {
             );
 
             stmt.executeUpdate();
-        } catch (@NotNull final SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         }
     }
@@ -126,8 +127,8 @@ public final class DatabaseTest {
      * @param age  Das Alter, welches für diesen Eintrag genutzt werden soll.
      */
     private static void insertValues(
-        @NotNull final String name,
-        @Range(from = 0, to = Integer.MAX_VALUE) final int age
+        final String name,
+        final int age
     ) {
         try (final Connection conn = getDatabaseHandler().getConnection()) {
             final PreparedStatement stmt = conn.prepareStatement(
@@ -140,7 +141,7 @@ public final class DatabaseTest {
             stmt.setTimestamp(3, Timestamp.from(Instant.now()));
 
             stmt.executeUpdate();
-        } catch (@NotNull final SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         }
     }
@@ -150,7 +151,6 @@ public final class DatabaseTest {
      *
      * @return Der Name, der zuletzt eingefügt wurde in der Datenbank.
      */
-    @NotNull
     private static String getNewestName() {
         try (final Connection conn = getDatabaseHandler().getConnection()) {
             final PreparedStatement stmt = conn.prepareStatement(
@@ -162,7 +162,7 @@ public final class DatabaseTest {
             if (rs.next()) {
                 return rs.getString("name");
             }
-        } catch (@NotNull final SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         }
 

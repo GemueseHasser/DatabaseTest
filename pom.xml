@@ -13,14 +13,6 @@
 
     <repositories>
         <repository>
-            <id>jetbrains-annotations</id>
-            <url>https://mvnrepository.com/artifact/org.jetbrains/annotations</url>
-        </repository>
-        <repository>
-            <id>lombok</id>
-            <url>https://mvnrepository.com/artifact/org.projectlombok/lombok</url>
-        </repository>
-        <repository>
             <id>HikariCP</id>
             <url>https://mvnrepository.com/artifact/com.zaxxer/HikariCP</url>
         </repository>
@@ -31,18 +23,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>20.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
